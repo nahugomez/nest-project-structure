@@ -1,14 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma, Post as PostModel } from '@prisma/client';
+import { CreatePostDto } from './dto/CreatePostDto';
+import { UpdatePostDto } from './dto/UpdatePostDto';
+import { PostModel } from './dto/PostModel';
 
 @Injectable()
 export class PostsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: Prisma.PostCreateInput): Promise<PostModel> {
+  async create(data: CreatePostDto): Promise<PostModel> {
     return this.prisma.post.create({
-      data,
+      data: {
+        content: data.content,
+        title: data.title,
+        published: data.published,
+        author: { connect: { id: data.author_id } },
+      },
     });
   }
 
@@ -25,7 +32,7 @@ export class PostsService {
     });
   }
 
-  async update(id: number, data: Prisma.PostUpdateInput): Promise<PostModel> {
+  async update(id: number, data: UpdatePostDto): Promise<PostModel> {
     return this.prisma.post.update({
       where: { id },
       data,

@@ -9,8 +9,6 @@ async function bootstrap() {
     .setTitle('NestJS API Starter Template')
     .setDescription('Example w/ Users and Posts')
     .setVersion('1.0')
-    .addTag('users')
-    .addTag('posts')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
