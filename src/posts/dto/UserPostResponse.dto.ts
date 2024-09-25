@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseUserDto } from 'src/users/dto/BaseUser.dto';
 
-export class PostUserResponseDto extends BaseUserDto {
+export class UserPostResponseDto extends BaseUserDto {
   @ApiProperty({ example: 1 })
   id: number;
 

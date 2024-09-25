@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BasePostDto } from './BasePost.dto';
-import { PostUserResponseDto } from './PostUserResponse.dto';
+import { UserPostResponseDto } from './UserPostResponse.dto';
 
 export class ResponsePostDto extends BasePostDto {
   @ApiProperty({ example: 1 })
@@ -21,5 +21,5 @@ export class ResponsePostDto extends BasePostDto {
       updated_at: '2023-10-21T17:32:28.000Z',
     },
   })
-  author: PostUserResponseDto;
+  author: UserPostResponseDto;
 }
