@@ -6,12 +6,14 @@ import {
   Param,
   Put,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/CreateUser.dto';
 import { ResponseUserDto } from './dto/ResponseUser.dto';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
+import { FindUsersQueryDto } from './dto/FindUserQuery.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -36,8 +38,8 @@ export class UsersController {
     description: 'Users found',
     type: ResponseUserDto,
   })
-  findAll(): Promise<ResponseUserDto[]> {
-    return this.usersService.findAll();
+  findAll(@Query() query: FindUsersQueryDto): Promise<ResponseUserDto[]> {
+    return this.usersService.findAll(query);
   }
 
   @Get(':id')

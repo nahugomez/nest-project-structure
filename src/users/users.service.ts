@@ -3,6 +3,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/CreateUser.dto';
 import { ResponseUserDto } from './dto/ResponseUser.dto';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
+import { FindUsersQueryDto } from './dto/FindUserQuery.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -15,8 +17,36 @@ export class UsersService {
     });
   }
 
-  async findAll(): Promise<ResponseUserDto[]> {
+  async findAll(query: FindUsersQueryDto): Promise<ResponseUserDto[]> {
+    const { take, skip, orderBy, order, filterBy, filter } = query;
+
+    const findOptions: Prisma.UserFindManyArgs = {};
+
+    if (take !== undefined) {
+      findOptions.take = Number(take);
+    }
+
+    if (skip !== undefined) {
+      findOptions.skip = Number(skip);
+    }
+
+    if (orderBy && order) {
+      findOptions.orderBy = {
+        [orderBy]: order,
+      };
+    }
+
+    if (filterBy && filter) {
+      findOptions.where = {
+        [filterBy]: {
+          contains: filter,
+          mode: 'insensitive',
+        },
+      };
+    }
+
     return this.prisma.user.findMany({
+      ...findOptions,
       include: { posts: true },
     });
   }
