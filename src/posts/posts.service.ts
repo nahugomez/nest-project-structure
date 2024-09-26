@@ -3,6 +3,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import { ResponsePostDto } from './dto/ResponsePost.dto';
 import { CreatePostDto } from './dto/CreatePost.dto';
 import { UpdatePostDto } from './dto/UpdatePost.dto';
+import { FindPostQueryDto } from './dto/FindPostQuery.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class PostsService {
@@ -20,8 +22,35 @@ export class PostsService {
     });
   }
 
-  async findAll(): Promise<ResponsePostDto[]> {
+  async findAll(query: FindPostQueryDto): Promise<ResponsePostDto[]> {
+    const { take, skip, orderBy, order, filterBy, filter } = query;
+    const findOptions: Prisma.PostFindManyArgs = {};
+
+    if (take !== undefined) {
+      findOptions.take = Number(take);
+    }
+
+    if (skip !== undefined) {
+      findOptions.skip = Number(skip);
+    }
+
+    if (orderBy && order) {
+      findOptions.orderBy = {
+        [orderBy]: order,
+      };
+    }
+
+    if (filterBy && filter) {
+      findOptions.where = {
+        [filterBy]: {
+          contains: filter,
+          mode: 'insensitive',
+        },
+      };
+    }
+
     return this.prisma.post.findMany({
+      ...findOptions,
       include: { author: true },
     });
   }

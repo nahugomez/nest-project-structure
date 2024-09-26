@@ -6,12 +6,14 @@ import {
   Param,
   Put,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PostsService } from './posts.service';
 import { ResponsePostDto } from './dto/ResponsePost.dto';
 import { CreatePostDto } from './dto/CreatePost.dto';
 import { UpdatePostDto } from './dto/UpdatePost.dto';
+import { FindPostQueryDto } from './dto/FindPostQuery.dto';
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -36,8 +38,8 @@ export class PostsController {
     description: 'Posts found',
     type: ResponsePostDto,
   })
-  findAll(): Promise<ResponsePostDto[]> {
-    return this.postsService.findAll();
+  findAll(@Query() query: FindPostQueryDto): Promise<ResponsePostDto[]> {
+    return this.postsService.findAll(query);
   }
 
   @Get(':id')
