@@ -7,10 +7,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator seed {
-  provider = "ts-node --transpile-only prisma/seed/seed.ts"
-}
-
 model User {
   id         Int      @id @default(autoincrement())
   email      String   @unique
