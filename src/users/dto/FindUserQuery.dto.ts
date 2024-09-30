@@ -32,6 +32,7 @@ export class FindUsersQueryDto {
   @IsString({ message: 'El parámetro orderBy debe ser un string' })
   @IsIn(['name', 'email', 'created_at'], {
     message: 'El parámetro orderBy debe ser name/email/created_at',
+    always: false,
   })
   orderBy?: 'name' | 'email' | 'created_at';
 
@@ -42,7 +43,10 @@ export class FindUsersQueryDto {
   })
   @IsOptional()
   @IsString({ message: 'El parámetro order debe ser un string' })
-  @IsIn(['asc', 'desc'], { message: 'El parámetro order debe ser asc/desc' })
+  @IsIn(['asc', 'desc'], {
+    message: 'El parámetro order debe ser asc/desc',
+    always: false,
+  })
   order?: 'asc' | 'desc';
 
   @ApiPropertyOptional({
@@ -54,6 +58,7 @@ export class FindUsersQueryDto {
   @IsString({ message: 'El parámetro filterBy debe ser un string' })
   @IsIn(['name', 'email'], {
     message: 'El parámetro filterBy debe ser name/email',
+    always: false,
   })
   filterBy?: string;
 

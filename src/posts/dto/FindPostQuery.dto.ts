@@ -29,6 +29,7 @@ export class FindPostQueryDto {
   @IsString({ message: 'El parámetro orderBy debe ser un string' })
   @IsIn(['title', 'published'], {
     message: 'El parámetro orderBy debe ser title/published',
+    always: false,
   })
   orderBy?: string;
 
@@ -38,7 +39,10 @@ export class FindPostQueryDto {
   })
   @IsOptional()
   @IsString({ message: 'El parámetro order debe ser un string' })
-  @IsIn(['asc', 'desc'], { message: 'El parámetro order debe ser asc/desc' })
+  @IsIn(['asc', 'desc'], {
+    message: 'El parámetro order debe ser asc/desc',
+    always: false,
+  })
   order?: 'asc' | 'desc';
 
   @ApiPropertyOptional({
@@ -49,6 +53,7 @@ export class FindPostQueryDto {
   @IsString({ message: 'El parámetro filterBy debe ser un string' })
   @IsIn(['title', 'content', 'published'], {
     message: 'El parámetro filterBy debe ser title/content/published',
+    always: false,
   })
   filterBy?: string;
 
